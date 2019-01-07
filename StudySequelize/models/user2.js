@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    name : {
+        type: Sequelize.STRING,
+        allowNull: false
     }
   }, {
       clssMethods: {
