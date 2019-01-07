@@ -1,0 +1,51 @@
+From 89f4b05e414421b804db635300a9c6fb4540672f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?DESKTOP-7IETLFJ=5C=EC=9E=84=EB=8B=A4=ED=98=9C?=
+ <devldh@naver.com>
+Date: Tue, 8 Jan 2019 01:31:50 +0900
+Subject: [PATCH] =?UTF-8?q?=EB=8D=B0=EC=9D=B4=ED=84=B0=20=EC=B6=94?=
+ =?UTF-8?q?=EA=B0=80=ED=95=98=EA=B8=B0?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ seqcrud/routes/index.js | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/seqcrud/routes/index.js b/seqcrud/routes/index.js
+index 9d21ab5..a78147e 100644
+--- a/seqcrud/routes/index.js
++++ b/seqcrud/routes/index.js
+@@ -1,5 +1,6 @@
+-var express = require('express');
+-var router = express.Router();
++const express = require('express');
++const models = require('../models');
++const router = express.Router();
+ 
+ /* GET home page. */
+ router.get('/', function(req, res, next) {
+@@ -10,4 +11,20 @@ router.get('/show', function(req, res, next) {
+     res.render('show');
+ })
+ 
++router.post('/create', function(req, res, next) {
++    let body = req.body;
++
++    models.post.create({
++        title: body.inputTitle,
++        writer: body.inputWriter
++    })
++    .then(result => {
++        console.log('데이터 추가 완료');
++        res.redirect('/show');
++    }).catch(err=>{
++        console.log('데이터 추가 실패');
++        console.log(err);
++    })
++})
++
+ module.exports = router;
+-- 
+2.19.1.windows.1
+
