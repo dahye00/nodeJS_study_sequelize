@@ -21,6 +21,15 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      user_id: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
       }
     });
   },
