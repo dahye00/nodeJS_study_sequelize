@@ -9,11 +9,26 @@ router.get('/', function(req, res, next) {
 
 router.get('/show', function(req, res, next) {
     models.post.findAll().then(result => {
-        res.render('show', {
-            posts:result
-        });
+        var loopIndex = 0;
+
+        for(let post of result) {
+            models.post.find({
+                include: {model: models.reply, where: {postId: post.id}}
+            }).then(result2 => {
+                if(result2) {
+                    post.replies = result2.replies
+                }
+
+                loopIndex++;
+                if(loopIndex === result.length) {
+                    res.render('show', {
+                        posts : result
+                    });
+                }
+            });
+        }
     });
-})
+});
 
 router.post('/create', function(req, res, next) {
     let body = req.body;
@@ -32,7 +47,7 @@ router.post('/create', function(req, res, next) {
     })
 })
 
-router.get('/edit/:id',function(req, res, next) {
+router.get('/edit/:id', function(req, res, next) {
     let postID = req.params.id;
 
     models.post.find({
@@ -84,5 +99,26 @@ router.post('/delete/:id', function(req, res, next) {
         console.log(err);
     })
 })
+
+//댓글
+router.post('/reply/:postID', function(req, res, next) {
+    let postID = req.params.postID;
+    let body = req.body;
+
+    models.reply.create({
+        postId: postID,
+        writer: body.replyWriter,
+        content: body.replyContent
+    })
+    .then(result => {
+        console.log('데이터 추가 완료');
+        res.redirect('/show');
+    })
+    .catch(err=>{
+        console.log('데이터 추가 실패');
+        console.log(err);
+    })
+})
+
 
 module.exports = router;

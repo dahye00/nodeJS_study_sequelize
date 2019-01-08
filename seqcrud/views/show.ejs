@@ -25,37 +25,57 @@
                 </td>
             </tr>
         </table>
-        <input type="submit" value="전송하기">
+        <input type="submit" value="게시글 작성">
     </form>
 <br>
 </br>
     <table class="list">
         <thead>
             <tr>
-                <th colspan="3">
+                <th colspan="5">
                     <h2> 게시물 조회하기 </h2>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
             <% for(let post of posts) { %>
+                <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>*</th>
+                </tr>
                 <tr>
                     <td><%= post.title %></td>
                     <td><%= post.writer %></td>
                     <td><%= post.createdAt %></td>
+                    <td><button><a href="/edit/<%=post.id%>">수정하기</a></button></td>
+                    <td><button><a href="/delete/<%=post.id%>">삭제하기</a></button></td>
                 </tr>
-                <td><button><a href="/edit/<%=post.id%>">수정하기</a></button></td>
-                <form action="/delete/<%=post.id%>?_method=DELETE" method="post">
-                    <td>
-                        <input type="submit" value="삭제하기"></input>
-                    </td>
+                <tr>
+                    <td colspan="5"><hr></td>
+                </tr>
+
+                <form action="/reply/<%=post.id%>" method="post">
+                    <tr>
+                        <td><input type="text" name="replyWriter" placeholder="작성자를 입력하세요"/></td>
+                        <td><input type="text" name="replyContent" placeholder="내용을 입력하세요"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="댓글등록"></td>
+                    </tr>
                 </form>
+
+                <% if(post.replies) { %>
+                    <% for(let reply of post.replies) { %>
+                        <tr>
+                            <td><%= reply.dataValues.writer %></td>
+                            <td><%= reply.dataValues.content %></td>
+                        </tr>
+                    <% } %>
+                <% } %>
             <% } %>
+
         </tbody>
     </table>
   </body>
