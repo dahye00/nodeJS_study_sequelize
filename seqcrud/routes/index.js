@@ -69,4 +69,20 @@ router.post('/update/:id', function(req, res, next) {
     })
 })
 
+router.post('/delete/:id', function(req, res, next) {
+    let postID = req.params.id;
+
+    models.post.destroy({
+        where: {id: postID}
+    })
+    .then( result => {
+        console.log('데이터 삭제 성공');
+        res.redirect('/show');
+    })
+    .catch( err => {
+        console.log('데이터 삭제 실패');
+        console.log(err);
+    })
+})
+
 module.exports = router;
