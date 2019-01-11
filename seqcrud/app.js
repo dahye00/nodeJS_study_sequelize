@@ -14,7 +14,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var memberRouter = require('./routes/member');
 
 //PUT, DELETE를 사용하기 위한 모듈
 var methodOverride = require('method-override');
@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/member', memberRouter);
 app.use(methodOverride('_method'));
 
 // catch 404 and forward to error handler
