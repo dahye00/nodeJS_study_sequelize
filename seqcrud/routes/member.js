@@ -51,6 +51,13 @@ router.post('/login', function(req, res, next) {
 
         if(dbPassword === hashPassword) {
             console.log('비밀번호 일치');
+
+            //쿠키 설정
+            res.cookie('member', body.memberEmail, {
+                expires: new Date(Date.now() + 900000),
+                httpOnly: true
+            })
+            
             res.redirect('/member');
         } else {
             console.log('비밀번호 불일치');
