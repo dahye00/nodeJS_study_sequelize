@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>nodeJS</title>
+    <script src="/javascripts/lib/jquery.min.js"></script>
+    <style>
+        input {display:block;}
+        body {width:100%; margin:0; padding:0;}
+
+        @media (min-width: 1000px) {
+          .floating_login_wrap_wrap .floating_login_wrap {
+              width:1000px;
+          }
+        }
+
+        .header {color:#fff; font-size:20px; background:#003458; text-align:center; padding:80px 0;}
+        .floating_login_wrap_wrap{width:100%; position: fixed; bottom: 0; border-top:3px solid #003458;}
+        .floating_login_wrap_wrap .floating_login_wrap{margin:15px auto; font-size:20px;}
+        .floating_login_wrap_wrap .floating_login_wrap .floating_login_info{font-weight:bold; color:#555; text-align: center;}
+        .floating_login_wrap_wrap .floating_login_wrap .hr_p{border:0.5px solid #9cadbf}
+        .floating_login_wrap_wrap .floating_login_wrap .floating_login{width:200px; margin:0 auto; border-radius:4px; border: 3px solid #003458;}
+        .floating_login_wrap_wrap .floating_login_wrap .floating_login, .floating_login input {cursor: pointer;}
+        .floating_login_wrap_wrap .floating_login_wrap .floating_login:hover, .floating_login input:hover{opacity: 0.9}
+        .floating_login_wrap_wrap .floating_login_wrap .floating_login input{padding:5px; color:#003458; font-weight:bold;margin: 0 auto; border: none; font-size: 18px; background: none;}
+    </style>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="header">
+        <span>반갑습니다 nodeJS sequelize를 이용한 게시판입니다.</span>
+    </div>
+    <div class="floating_login_wrap_wrap">
+        <form class="floating_login_wrap">
+            <p class="floating_login_info">로그인하셔야 이용 가능합니다.</p>
+            <p class="hr_p"></p>
+            <p class="floating_login"><input type="submit" value="로그인하기"></p>
+        </form>
+    </div>
   </body>
 </html>
