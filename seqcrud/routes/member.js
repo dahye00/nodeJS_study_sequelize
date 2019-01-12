@@ -54,7 +54,6 @@ router.post('/login', function(req, res, next) {
 
         if(dbPassword === hashPassword) {
             console.log('비밀번호 일치');
-            console.log(req.session);
             //세션설정
             req.session.email = body.memberEmail;
             req.session.save(() => {
@@ -62,13 +61,19 @@ router.post('/login', function(req, res, next) {
             });
         } else {
             console.log('비밀번호 불일치');
-            res.redirecct('/member/login');
+            res.redirect('/member/login');
         }
     })
     .catch(err => {
         console.log(err);
     })
+})
 
+router.get('/logout', function(req, res, next) {
+    delete req.session.email;
+    req.session.save(() => {
+        res.redirect('/member/login');
+    });
 })
 
 module.exports = router;

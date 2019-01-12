@@ -5,8 +5,6 @@
     <title>로그인</title>
   </head>
   <body>
-    <h3>로그인</h3>
-    <hr>
     <% if(session.email){%>
         <h3>로그인에 성공하셨습니다~</h3>
         <form action="/member/logout" method="get">
@@ -16,21 +14,23 @@
             <input type="submit" value="홈으로 이동">
         </form>
     <% } else { %>
-    <form action="/member/login" method="post">
-        <table>
-            <tr>
-                <td>이메일</td>
-                <td><input type="text" name="memberEmail"></td>
-            </tr>
-            <tr>
-                <td>비번</td>
-                <td><input type="password" name="password"></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;"><input type="submit" value="로그인"></td>
-            </tr>
-        </table>
-    </form>
+        <h3>로그인</h3>
+        <hr>
+        <form action="/member/login" method="post">
+            <table>
+                <tr>
+                    <td>이메일</td>
+                    <td><input type="text" name="memberEmail"></td>
+                </tr>
+                <tr>
+                    <td>비번</td>
+                    <td><input type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;"><input type="submit" value="로그인"></td>
+                </tr>
+            </table>
+        </form>
     <% } %>
   </body>
 </html>
