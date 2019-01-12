@@ -9,8 +9,10 @@ models.sequelize.sync().then(()=>{
 
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
+//session의 사용을 위해서는 cokie-parser필요
+var session = require('express-session');
+var path = require('path');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -25,10 +27,21 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(cookieParser());
+//session
+app.use(session({
+    key: 'sid',
+    secret: 'secret',
+    resave : false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge : 24000 * 60 * 60 //쿠키유효시간 24시간
+    }
+}));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

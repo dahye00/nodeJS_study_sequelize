@@ -33,7 +33,11 @@ router.post('/sign_up', function(req, res, next) {
 })
 
 router.get('/login', function(req, res, next) {
-    res.render('member/login');
+    let session = req.session ? req.session : false;
+
+    res.render('member/login', {
+        session : session
+    });
 })
 
 router.post('/login', function(req, res, next) {
@@ -44,21 +48,18 @@ router.post('/login', function(req, res, next) {
     })
     .then(result => {
         let dbPassword = result.dataValues.password;
-
         let inputPassword = body.password;
         let salt = result.dataValues.salt;
         let hashPassword = crypto.createHash('sha512').update(inputPassword + salt).digest('hex');
 
         if(dbPassword === hashPassword) {
             console.log('비밀번호 일치');
-
-            //쿠키 설정
-            res.cookie('member', body.memberEmail, {
-                expires: new Date(Date.now() + 900000),
-                httpOnly: true
-            })
-            
-            res.redirect('/member');
+            console.log(req.session);
+            //세션설정
+            req.session.email = body.memberEmail;
+            req.session.save(() => {
+                res.redirect('/member/login');
+            });
         } else {
             console.log('비밀번호 불일치');
             res.redirecct('/member/login');

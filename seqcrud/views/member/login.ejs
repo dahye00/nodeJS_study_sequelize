@@ -7,6 +7,15 @@
   <body>
     <h3>로그인</h3>
     <hr>
+    <% if(session.email){%>
+        <h3>로그인에 성공하셨습니다~</h3>
+        <form action="/member/logout" method="get">
+            <input type="submit" value="로그아웃">
+        </form>
+        <form action="/show" method="get">
+            <input type="submit" value="홈으로 이동">
+        </form>
+    <% } else { %>
     <form action="/member/login" method="post">
         <table>
             <tr>
@@ -22,5 +31,6 @@
             </tr>
         </table>
     </form>
+    <% } %>
   </body>
 </html>
